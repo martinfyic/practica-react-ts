@@ -36,7 +36,10 @@ export const CounterEffect: FC = () => {
 
 	useLayoutEffect(() => {
 		if (counter < LIMIT_COUNT.MAXIMUM) return;
-		console.log('%c2Pac excelent', 'color: yellow; background-color: black;');
+		console.log(
+			'%cLlegaste al maximo',
+			'color: yellow; background-color: black;'
+		);
 
 		const tl = gsap.timeline();
 		tl.to(counterElement.current, {
