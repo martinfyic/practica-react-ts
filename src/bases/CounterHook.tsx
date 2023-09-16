@@ -1,6 +1,12 @@
 import { FC } from 'react';
 import { useCounter } from '../hooks';
 
+const LIMIT = {
+	MAXIMUM: 10,
+	INITIAL: 0,
+	MINIMUM: 0,
+};
+
 export const CounterHook: FC = () => {
 	const {
 		counter,
@@ -11,7 +17,11 @@ export const CounterHook: FC = () => {
 		maximumCount,
 		minimumCount,
 		resetCounter,
-	} = useCounter();
+	} = useCounter({
+		maxCounter: LIMIT.MAXIMUM,
+		initialCounter: LIMIT.INITIAL,
+		minCounter: LIMIT.MINIMUM,
+	});
 
 	return (
 		<div>

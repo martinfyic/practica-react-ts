@@ -1,40 +1,32 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 
-interface ILimitCounts {
-	MAXIMUM: 10;
-	MINIMUM: 0;
-	INITIAL: number;
-}
-
-const LIMIT_COUNT: ILimitCounts = {
-	MAXIMUM: 10,
-	MINIMUM: 0,
-	INITIAL: 0,
-};
-
-export const useCounter = () => {
-	const [counter, setCounter] = useState<number>(LIMIT_COUNT.INITIAL);
+export const useCounter = ({
+	maxCounter = 10,
+	initialCounter = 0,
+	minCounter = 0,
+}) => {
+	const [counter, setCounter] = useState<number>(initialCounter);
 	const elementToAnimate = useRef<HTMLHeadingElement>(null);
 
 	const tl = useRef(gsap.timeline());
 
 	const increment = () => {
-		setCounter(prev => Math.min(prev + 1, LIMIT_COUNT.MAXIMUM));
+		setCounter(prev => Math.min(prev + 1, maxCounter));
 	};
 
 	const decrement = () => {
-		// if (counter === LIMIT_COUNT.MINIMUM) return;
-		setCounter(prev => Math.max(prev - 1, LIMIT_COUNT.MINIMUM));
+		// if (counter === minCounter) return;
+		setCounter(prev => Math.max(prev - 1, minCounter));
 	};
 
 	const resetCounter = () => {
-		setCounter(LIMIT_COUNT.INITIAL);
+		setCounter(initialCounter);
 	};
 
-	const equalThaninitialValue = counter === LIMIT_COUNT.INITIAL;
-	const maximumCount = counter >= LIMIT_COUNT.MAXIMUM;
-	const minimumCount = counter <= LIMIT_COUNT.MINIMUM;
+	const equalThaninitialValue = counter === initialCounter;
+	const maximumCount = counter >= maxCounter;
+	const minimumCount = counter <= minCounter;
 
 	useLayoutEffect(() => {
 		if (!elementToAnimate.current) return;
@@ -54,9 +46,9 @@ export const useCounter = () => {
 	}, []);
 
 	useEffect(() => {
-		if (counter > LIMIT_COUNT.MAXIMUM) return;
+		if (counter > maxCounter) return;
 		tl.current.play(0);
-	}, [counter]);
+	}, [counter, maxCounter]);
 
 	return {
 		counter,
