@@ -4,7 +4,7 @@ import { useCounter } from '../hooks';
 export const CounterHook: FC = () => {
 	const {
 		counter,
-		counterElement,
+		elementToAnimate,
 		decrement,
 		equalThaninitialValue,
 		increment,
@@ -17,7 +17,7 @@ export const CounterHook: FC = () => {
 		<div>
 			<section className='title_area_counters'>
 				<h2>CounterHook: </h2>
-				<h2 ref={counterElement}>{counter}</h2>
+				<h2 ref={elementToAnimate}>{counter}</h2>
 			</section>
 			<div className='button_box'>
 				<button

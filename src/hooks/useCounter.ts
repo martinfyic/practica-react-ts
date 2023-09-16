@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 
 interface ILimitCounts {
@@ -15,7 +15,9 @@ const LIMIT_COUNT: ILimitCounts = {
 
 export const useCounter = () => {
 	const [counter, setCounter] = useState<number>(LIMIT_COUNT.INITIAL);
-	const counterElement = useRef<HTMLHeadingElement>(null);
+	const elementToAnimate = useRef<HTMLHeadingElement>(null);
+
+	const tl = useRef(gsap.timeline());
 
 	const increment = () => {
 		setCounter(prev => Math.min(prev + 1, LIMIT_COUNT.MAXIMUM));
@@ -35,28 +37,31 @@ export const useCounter = () => {
 	const minimumCount = counter <= LIMIT_COUNT.MINIMUM;
 
 	useLayoutEffect(() => {
-		if (counter < LIMIT_COUNT.MAXIMUM) return;
-		console.log(
-			`%cLlegaste al numero maximo ${LIMIT_COUNT.MAXIMUM}`,
-			'color: yellow; background-color: black;'
-		);
+		if (!elementToAnimate.current) return;
 
-		const tl = gsap.timeline();
-		tl.to(counterElement.current, {
-			y: -20,
-			duration: 0.3,
-			ease: 'ease.out',
-		}).to(counterElement.current, {
-			y: 0,
-			duration: 0.8,
-			ease: 'bounce.out',
-		});
+		tl.current
+			.to(elementToAnimate.current, {
+				y: -10,
+				duration: 0.2,
+				ease: 'ease.out',
+			})
+			.to(elementToAnimate.current, {
+				y: 0,
+				duration: 0.5,
+				ease: 'bounce.out',
+			})
+			.pause();
+	}, []);
+
+	useEffect(() => {
+		if (counter > LIMIT_COUNT.MAXIMUM) return;
+		tl.current.play(0);
 	}, [counter]);
 
 	return {
 		counter,
-		counterElement,
 		decrement,
+		elementToAnimate,
 		equalThaninitialValue,
 		increment,
 		maximumCount,
