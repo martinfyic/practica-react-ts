@@ -1,5 +1,11 @@
 import './App.css';
-import { Counter, CounterBy, CounterEffect, CounterHook } from './bases';
+import {
+	Counter,
+	CounterBy,
+	CounterEffect,
+	CounterHook,
+	CounterReducerComponent,
+} from './bases';
 
 function App() {
 	return (
@@ -13,6 +19,8 @@ function App() {
 			<CounterEffect />
 			<hr />
 			<CounterHook />
+			<hr />
+			<CounterReducerComponent />
 		</>
 	);
 }
