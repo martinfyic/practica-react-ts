@@ -4,8 +4,9 @@ import {
 	CounterBy,
 	CounterEffect,
 	CounterHook,
-	CounterReducerComponent,
+	// CounterReducerComponent,
 } from './bases';
+import { CounterReducerComponent } from './counter-reducer';
 
 function App() {
 	return (
