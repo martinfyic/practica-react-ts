@@ -1,6 +1,7 @@
 import { FC, useReducer } from 'react';
 import { CounterState } from './interfaces';
 import { counterReducer } from './state';
+import * as actions from './action';
 
 const INITIAL_STATE: CounterState = {
 	counter: 0,
@@ -15,24 +16,16 @@ export const CounterReducerComponent: FC = () => {
 	const stateHasChanges = state.changes === 0;
 
 	const increaseBy = (value: number) => {
-		dispatch({
-			type: 'increseBy',
-			payload: { value },
-		});
+		dispatch(actions.doIncreseBy(value));
 	};
 
 	const decreseBy = (value: number) => {
 		if (state.counter - value < 0) return;
-		dispatch({
-			type: 'decreseBy',
-			payload: { value },
-		});
+		dispatch(actions.doDecreseBy(value));
 	};
 
 	const onReset = () => {
-		dispatch({
-			type: 'reset',
-		});
+		dispatch(actions.doReset());
 	};
 
 	return (
